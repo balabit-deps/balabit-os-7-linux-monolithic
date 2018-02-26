@@ -23,4 +23,5 @@ do_zfs		= false
 
 skipmodule = true
 skipabi = true
+skipretpoline = true
 disable_d_i = true
