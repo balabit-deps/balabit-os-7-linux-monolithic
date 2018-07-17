@@ -78,6 +78,7 @@
 #include <asm/realmode.h>
 #include <asm/misc.h>
 #include <asm/qspinlock.h>
+#include <asm/spec-ctrl.h>
 
 /* Number of siblings per CPU package */
 int smp_num_siblings = 1;
@@ -242,6 +243,8 @@ static void notrace start_secondary(void *unused)
 	 * Check TSC synchronization with the boot CPU:
 	 */
 	check_tsc_sync_target();
+
+	speculative_store_bypass_ht_init();
 
 	/*
 	 * Lock vector_lock, set CPU online and bring the vector
@@ -1258,6 +1261,8 @@ void __init native_smp_prepare_cpus(unsigned int max_cpus)
 	set_mtrr_aps_delayed_init();
 
 	smp_quirk_init_udelay();
+
+	speculative_store_bypass_ht_init();
 }
 
 void arch_enable_nonboot_cpus_begin(void)
@@ -1282,11 +1287,10 @@ void __init native_smp_prepare_boot_cpu(void)
 	cpu_set_state_online(me);
 }
 
-void __init native_smp_cpus_done(unsigned int max_cpus)
+void __init calculate_max_logical_packages(void)
 {
 	int ncpus;
 
-	pr_debug("Boot done\n");
 	/*
 	 * Today neither Intel nor AMD support heterogenous systems so
 	 * extrapolate the boot cpu's data to all packages.
@@ -1294,6 +1298,13 @@ void __init native_smp_cpus_done(unsigned int max_cpus)
 	ncpus = cpu_data(0).booted_cores * topology_max_smt_threads();
 	__max_logical_packages = DIV_ROUND_UP(nr_cpu_ids, ncpus);
 	pr_info("Max logical packages: %u\n", __max_logical_packages);
+}
+
+void __init native_smp_cpus_done(unsigned int max_cpus)
+{
+	pr_debug("Boot done\n");
+
+	calculate_max_logical_packages();
 
 	if (x86_has_numa_in_package)
 		set_sched_topology(x86_numa_in_package_topology);
@@ -1431,7 +1442,6 @@ static void remove_siblinginfo(int cpu)
 	cpumask_clear(cpu_llc_shared_mask(cpu));
 	cpumask_clear(topology_sibling_cpumask(cpu));
 	cpumask_clear(topology_core_cpumask(cpu));
-	c->phys_proc_id = 0;
 	c->cpu_core_id = 0;
 	cpumask_clear_cpu(cpu, cpu_sibling_setup_mask);
 	recompute_smt_state();
