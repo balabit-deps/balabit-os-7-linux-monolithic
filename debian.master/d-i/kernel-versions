@@ -1,5 +1,6 @@
 # arch	version		flavour		installedname			suffix	bdep
 amd64	-		generic		-				-	-
+amd64	-		xcb		-				-	-
 
 i386	-		generic		-				-	-
 
