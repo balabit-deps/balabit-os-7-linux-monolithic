@@ -38,6 +38,9 @@ do_cloud_tools=$(sort $(filter-out false,$(do_tools_hyperv)))
 do_tools_common?=true
 do_tools_host?=false
 
+# allow to disable modules_install
+modules_install=$(if $(filter false,$(skipmodules)),modules)
+
 # Don't build tools or udebs in a cross compile environment.
 ifneq ($(DEB_HOST_ARCH),$(DEB_BUILD_ARCH))
 	do_tools=false
