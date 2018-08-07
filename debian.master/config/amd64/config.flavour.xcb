@@ -595,6 +595,7 @@ CONFIG_I2C_SMBUS=y
 # CONFIG_I40E is not set
 # CONFIG_I40EVF is not set
 # CONFIG_I8K is not set
+# CONFIG_IA32_EMULATION is not set
 # CONFIG_IBM_ASM is not set
 # CONFIG_IBM_RTL is not set
 # CONFIG_ICPLUS_PHY is not set
