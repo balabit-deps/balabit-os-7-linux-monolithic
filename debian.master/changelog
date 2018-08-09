@@ -1,3 +1,9 @@
+linux (4.15.0-30.32bb1) bionic; urgency=medium
+
+  * Balabit patched version
+
+ -- Balabit Platform Team <devnull@dev.null>  Thu, 09 Aug 2018 11:39:01 +0200
+
 linux (4.15.0-30.32) bionic; urgency=medium
 
   * CVE-2018-5390
