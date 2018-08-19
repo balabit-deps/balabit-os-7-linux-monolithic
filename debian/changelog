@@ -1,3 +1,9 @@
+linux (4.15.0-32.35bb1) bionic; urgency=medium
+
+  * Balabit patched version
+
+ -- Balabit Platform Team <devnull@dev.null>  Sun, 19 Aug 2018 04:21:45 +0200
+
 linux (4.15.0-32.35) bionic; urgency=medium
 
   [ Stefan Bader ]
