@@ -1,3 +1,9 @@
+linux (4.15.0-38.41bb1) bionic; urgency=medium
+
+  * Balabit patched version
+
+ -- Balabit Platform Team <devnull@dev.null>  Wed, 07 Nov 2018 16:34:21 +0100
+
 linux (4.15.0-38.41) bionic; urgency=medium
 
   * linux: 4.15.0-38.41 -proposed tracker (LP: #1797061)
